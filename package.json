@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
+    "ci": "pnpm install --frozen-lockfile --ignore-scripts",
     "start:dev": "dotenv -e .env -- ts-node -r tsconfig-paths/register",
     "test": "dotenv -e .env -- jest",
     "test:watch": "dotenv -e .env jest --watch",
