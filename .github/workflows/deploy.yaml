@@ -1,0 +1,73 @@
+name: Run Test
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+      - v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+
+  # GitHub Actions탭에서 수동실행 가능하도록 설정
+  workflow_dispatch:
+
+# 동시성 설정: 같은 그룹의 배포가 여러개 실행되면 가장 마지막에 실행된 배포외에는 취소 시킨다.
+## [참고](https://docs.github.com/ko/actions/using-workflows/workflow-syntax-for-github-actions#example-using-concurrency-to-cancel-any-in-progress-job-or-run)
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+# 환경변수 설정
+env:
+  VERSION: ${{ github.sha }}
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-22.04 #self-hosted 동일한 os 사용
+    strategy:
+      matrix:
+        node-version: [v18.14.2]
+    steps:
+      # 1. 워크플로를 수행하기 위해 해당 브랜치로 checkout
+      - name: Checkout actions Repository
+        uses: actions/checkout@v2
+      # 2. node 버전 설정
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      # 3. pnpm 셋팅(설치)
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: false
+
+      # 4. 'pnpm store path'명령 결과를 환경변수로 설정
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      # 5. actions/cache@v3를 사용하여 캐싱 설정
+      - name: Set pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      # 6. node_modules 캐싱 확인
+      - name: Check Dependencies cache
+        uses: actions/cache@v3
+        id: cache-dependencies
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+      # 7. 의존성(pnpm-lock)에 변경 사항이 있다면 캐싱 갱신한다.
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: pnpm run ci
+
+      # 8. 테스트 수행
+      - name: Run Test
+        env:
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
+        run: pnpm test
