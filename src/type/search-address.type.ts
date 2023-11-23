@@ -14,7 +14,7 @@ export interface SearchAddressRequsetQuery extends BaseRequestQuery {
    * - exact: 주소의 정확한 건물명이 입력된 주소패턴일 경우에 한해, 입력한 건물명과 정확히 일치하는 검색 결과 제공
    * @default similar
    */
-  analyze_type: 'similar' | 'exact';
+  analyze_type?: 'similar' | 'exact';
 }
 
 /* ================= Response ================= */

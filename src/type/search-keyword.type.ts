@@ -26,7 +26,7 @@ export interface SearchKeywordRequestQuery extends BaseRequestQuery {
    * - 단위: 미터(m), 최소: 0, 최대: 20000
    * - radius 또는 rect 필수
    */
-  radius?: string;
+  radius?: number;
 
   /**
    * 사각형의 지정 범위 내 제한 검색을 위한 좌표
