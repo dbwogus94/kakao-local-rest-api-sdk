@@ -8,6 +8,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "main": "src/index.ts",
   "scripts": {
     "ci": "pnpm install --frozen-lockfile --ignore-scripts",
     "start:dev": "dotenv -e .env -- ts-node -r tsconfig-paths/register",
