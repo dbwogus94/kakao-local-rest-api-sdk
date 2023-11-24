@@ -14,7 +14,7 @@ export interface GeoCoord2addressResponseDocument {
     address: GeoCoord2addressAddress;
     road_address: GeoCoord2addressRoadAddress;
 }
-interface GeoCoord2addressAddress {
+export interface GeoCoord2addressAddress {
     address_name: string;
     region_1depth_name: string;
     region_2depth_name: string;
@@ -24,7 +24,7 @@ interface GeoCoord2addressAddress {
     sub_address_no: string;
     zip_code?: string;
 }
-interface GeoCoord2addressRoadAddress {
+export interface GeoCoord2addressRoadAddress {
     address_name: string;
     region_1depth_name: string;
     region_2depth_name: string;
@@ -36,4 +36,3 @@ interface GeoCoord2addressRoadAddress {
     building_name: string;
     zone_no: string;
 }
-export {};

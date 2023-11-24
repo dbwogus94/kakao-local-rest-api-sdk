@@ -20,7 +20,7 @@ export interface SearchAddressResponseDocument {
     address: SearchAddressAddress;
     road_address: SearchAddressRoadAddress;
 }
-interface SearchAddressAddress {
+export interface SearchAddressAddress {
     address_name: string;
     region_1depth_name: string;
     region_2depth_name: string;
@@ -34,7 +34,7 @@ interface SearchAddressAddress {
     x: string;
     y: string;
 }
-interface SearchAddressRoadAddress {
+export interface SearchAddressRoadAddress {
     address_name: string;
     region_1depth_name: string;
     region_2depth_name: string;
@@ -48,4 +48,3 @@ interface SearchAddressRoadAddress {
     x: string;
     y: string;
 }
-export {};
