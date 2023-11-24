@@ -48,7 +48,7 @@ export interface GeoCoord2addressResponseDocument {
 /**
  * 좌표로 주소 변환하기 응답 - 지번 주소 상세 정보
  */
-interface GeoCoord2addressAddress {
+export interface GeoCoord2addressAddress {
   /** 전체 지번 주소 */
   address_name: string;
   /** 지역 1Depth명, 시도 단위 */
@@ -70,7 +70,7 @@ interface GeoCoord2addressAddress {
 /**
  * 좌표로 주소 변환하기 응답 - 도로명 주소 상세 정보
  */
-interface GeoCoord2addressRoadAddress {
+export interface GeoCoord2addressRoadAddress {
   /** 전체 도로명 주소 */
   address_name: string;
   /** 지역 1Depth, 시도 단위 */

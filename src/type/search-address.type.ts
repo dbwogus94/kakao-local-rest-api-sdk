@@ -68,7 +68,7 @@ export interface SearchAddressResponseDocument {
 /**
  * 주소 검색하기 응답 - (구)주소정보
  */
-interface SearchAddressAddress {
+export interface SearchAddressAddress {
   /** 전체 지번 주소 */
   address_name: string;
   /** 지역 1 Depth, 시도 단위 */
@@ -98,7 +98,7 @@ interface SearchAddressAddress {
 /**
  * 주소 검색하기 응답 - 도로 주소 정보
  */
-interface SearchAddressRoadAddress {
+export interface SearchAddressRoadAddress {
   /** 전체 도로명 주소 */
   address_name: string;
   /** 지역명1 */
